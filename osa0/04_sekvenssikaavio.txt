@@ -1,0 +1,20 @@
+Selain							Palvelin
+-Käyttäjä syöttää uuden muistiinpanon ja painaa "save"
+--HTTP POST fullstack-exampleapp.herokuapp.com/new-note-->
+
+			<--HTTP 302, redirect to /notes --
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/notes ----->
+			<--sivun HTML---------------------
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/main.css -->
+			<--- main.css --------------------
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/main.js --->
+			<--- main.js ---------------------
+Selain suorittaa main.js-koodia,
+joka pyytää JSON-dataa palvelimelta
+--HTTP GET fullstack-exampleapp.herokuapp.com/data.json ->
+			<--- data.json -------------------
+Selain suorittaa tapahtumakäsittelijän,
+joka renderöi muistiinpanot näytölle
