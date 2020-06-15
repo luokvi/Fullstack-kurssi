@@ -1,0 +1,8 @@
+Selain								Palvelin
+-Käyttäjä kirjoittaa uuden muistiinpanon ja painaa "save"
+-Selain suorittaa tapahtumakäsittelijän,
+joka lisää uuden muistiinpanon listaan,
+renderöi muistiinpanot näytölle, ja
+lähettää uuden muistiinpanon palvelimelle
+
+--HTTP POST fullstack-exampleapp.herokuapp.com/new_note_spa -->

@@ -1,0 +1,19 @@
+Selain							Palvelin
+Käyttäjä avaa sivun selaimessa
+--HTTP GET fullstack-exampleapp.herokuapp.com/spa ----->
+		<--sivun HTML-koodi --------------------
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/main.css->
+		<--main.css-----------------------------
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/spa.js -->
+		<--spa.js-------------------------------
+
+-Selain suorittaa spa.js-koodia,
+joka pyytää JSON-dataa palvelimelta
+
+--HTTP GET fullstack-exampleapp.herokuapp.com/data.json
+		<--data.json ---------------------------
+
+-Selain suorittaa tapahtumakäsittelijän,
+joka renderöi mustiinpanot näytölle
