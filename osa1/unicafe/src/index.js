@@ -3,7 +3,43 @@ import ReactDOM from 'react-dom';
 
 const Button = (props) =>{
   return(
-    <button onClick={props.handleClick}>{props.text}</button>
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+}
+
+const Statistics = (props) =>{
+  if (props.all === 0){
+    return(
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+  const average = props.points / props.all
+  const positivePer = (props.good / props.all * 100) + " %"
+
+  return (
+    <table>
+      <tbody>
+        <StaticsLine text="Good" value={props.good} />
+        <StaticsLine text="Neutral" value={props.neutral} />
+        <StaticsLine text="Bad" value={props.bad} />
+        <StaticsLine text="All" value={props.all} />
+        <StaticsLine text="Average" value={average} />
+        <StaticsLine text="Positive" value={positivePer}/>
+      </tbody>
+    </table>
+  )
+}
+
+const StaticsLine = (props) =>{
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+      </tr>
   )
 }
 
@@ -36,13 +72,9 @@ const App = () =>{
       <Button handleClick={() => addNeutral()} text="Neutral" />
       <Button handleClick={() => addBad()} text="Bad" />
 
-      <h1>Statistics</h1>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {all}</p>
-      <p>Average: {points / all}</p>
-      <p>Positive {good / all * 100}%</p>
+      <h2>Statistics</h2>
+      <Statistics good={good} bad={bad} neutral={neutral} all={all} points={points}/>
+      
     </div>
   )
 }
