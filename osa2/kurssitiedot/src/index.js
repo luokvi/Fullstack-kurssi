@@ -32,9 +32,12 @@ const Part = (props) => {
   )
 }
 
-const Total = (props) => {
+const Total = ({parts}) => {
+  var total = 0
+  parts.map(part => total += part.exercises)
+
   return (
-    <p>Number of exercises {props.total}</p>
+    <p><b>Total of {total} exercises</b></p>
   )
 }
 
@@ -65,6 +68,7 @@ const App = () => {
   return (
     <div>
       <Course course={course}/>
+      <Total parts={course.parts} />
     </div>
   )
 
