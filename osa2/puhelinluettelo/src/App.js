@@ -22,12 +22,21 @@ const App = () => {
 
   const addName = (event) =>{
     event.preventDefault()
+
+    const match = (person) => person.name === newName
+    const alreadyInList = persons.some(match)
+    if (alreadyInList){
+        window.alert(`${newName} has already been added to phonebook`)
+
+        return
+    }
+
     const newPerson = {
         name: newName,
         number: '00',
         id: persons.length + 1
     }
-    
+
     setPersons(persons.concat(newPerson))
   }
 
