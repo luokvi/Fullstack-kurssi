@@ -20,6 +20,7 @@ const App = () => {
 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [newFilter, setNewFilter ] = useState('')
 
   const addName = (event) =>{
     event.preventDefault()
@@ -51,9 +52,22 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const namesToShow = persons.filter(person => person.name.match(new RegExp(newFilter, "i")))
+
+  const handleFilterInput = (event) =>{
+      setNewFilter(event.target.value)
+      
+  }
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <form>
+          <div>
+              filter shown names: <input value={newFilter} onChange={handleFilterInput} />
+          </div>
+      </form>
+      <h2>Add New</h2>
       <form onSubmit={addName}>
         <div>
           name: <input value={newName} onChange={handleNameInput}/>
@@ -66,7 +80,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={namesToShow} />
     </div>
   )
 
