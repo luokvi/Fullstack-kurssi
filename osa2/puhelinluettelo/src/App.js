@@ -17,6 +17,18 @@ const Notification = ({message}) =>{
   )
 }
 
+const Error = ({message}) =>{
+  if (message === null){
+    return null
+  }
+
+  return(
+    <div className='error'>
+    {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
@@ -24,6 +36,7 @@ const App = () => {
   const [newFilter, setNewFilter ] = useState('')
 
   const [ notifMessage, setNotification] = useState('')
+  const [ errorMessage, setError] = useState('')
 
 
   const addName = (event) =>{
@@ -37,11 +50,6 @@ const App = () => {
         if (replace){
           replaceNum(newName, newNumber)
 
-          setNotification(`Succesfully changed ${newName}'s number!`)
-          setTimeout(() =>{
-            setNotification('')
-          }, 5000)
-          
         }
 
         return
@@ -78,6 +86,10 @@ const App = () => {
           }, 5000)
         })
       })
+
+      .catch(err =>{
+        handleError(p.name)
+      })
     }  
   }
 
@@ -86,8 +98,29 @@ const App = () => {
       const names = server.getAll()
       names.then(response =>{
         setPersons(response)
+
+        setNotification(`Succesfully changed ${newName}'s number!`)
+        setTimeout(() =>{
+          setNotification('')
+        }, 5000)
       })
     })
+
+    .catch(err =>{
+      handleError(name)
+    })
+  }
+
+  const handleError = (name) =>{
+    setError(`${name} has already been removed`)
+      setTimeout(() =>{
+        setError('')
+      }, 5000)
+
+      const data = server.getAll()
+      data.then(response => {
+        setPersons(response)
+      })
   }
 
   const handleNameInput = (event) =>{
@@ -125,6 +158,7 @@ const App = () => {
       newNumber={newNumber} handleNumInput={handleNumInput}/>
 
       <Notification message={notifMessage} />
+      <Error message={errorMessage} />
 
       <h2>Numbers</h2>
       <Persons persons={namesToShow} remove={removeName}/>

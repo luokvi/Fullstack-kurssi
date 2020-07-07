@@ -18,3 +18,10 @@ code {
   color: green;
   background-color: lightgray;
 }
+
+.error{
+  font-size: 20px;
+  margin: 10px;
+  color: red;
+  background-color: lightgray;
+}
