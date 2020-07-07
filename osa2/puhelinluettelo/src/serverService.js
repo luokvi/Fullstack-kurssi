@@ -15,4 +15,12 @@ const removeName = (id) =>{
     return axios.delete(`http://localhost:3001/persons/${id}`)
 }
 
-export default {getAll, addNew, removeName}
+const replaceNum = (persons, name, number) =>{
+
+    const toUpdate = persons.find(p => p.name === name)
+    const updatedPerson = { ... toUpdate, number: number}
+    const updated = axios.put(`http://localhost:3001/persons/${updatedPerson.id}`, updatedPerson)
+    return updated.then(response => response.data)
+}
+
+export default {getAll, addNew, removeName, replaceNum}

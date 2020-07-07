@@ -19,7 +19,11 @@ const App = () => {
     const match = (person) => person.name === newName
     const alreadyInList = persons.some(match)
     if (alreadyInList){
-        window.alert(`${newName} has already been added to phonebook`)
+
+        const replace = window.confirm(`${newName} is already in the phonebook. Replace their older number with ${newNumber}?`)
+        if (replace){
+          replaceNum(newName, newNumber)
+        }
 
         return
     }
@@ -45,9 +49,16 @@ const App = () => {
           setPersons(response)
         })
       })
+    }  
   }
 
-    
+  const replaceNum = (name, number) =>{
+    server.replaceNum(persons, name, number).then(r =>{
+      const names = server.getAll()
+      names.then(response =>{
+        setPersons(response)
+      })
+    })
   }
 
   const handleNameInput = (event) =>{
