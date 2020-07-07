@@ -5,12 +5,25 @@ import NameForm from './nameForm'
 import FilterForm from './filterForm'
 import server from './serverService'
 
+const Notification = ({message}) =>{
+  if (message === null){
+    return null
+  }
+
+  return(
+    <div className='notification'>
+    {message}
+    </div>
+  )
+}
 
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [newFilter, setNewFilter ] = useState('')
+
+  const [ notifMessage, setNotification] = useState('')
 
 
   const addName = (event) =>{
@@ -23,6 +36,12 @@ const App = () => {
         const replace = window.confirm(`${newName} is already in the phonebook. Replace their older number with ${newNumber}?`)
         if (replace){
           replaceNum(newName, newNumber)
+
+          setNotification(`Succesfully changed ${newName}'s number!`)
+          setTimeout(() =>{
+            setNotification('')
+          }, 5000)
+          
         }
 
         return
@@ -36,6 +55,11 @@ const App = () => {
 
     setPersons(persons.concat(newPerson))
     server.addNew(newPerson)
+
+    setNotification(`Added ${newName}`)
+    setTimeout(() =>{
+      setNotification('')
+    }, 5000)
     
   }
 
@@ -47,6 +71,11 @@ const App = () => {
         const names = server.getAll()
         names.then(response =>{
           setPersons(response)
+
+          setNotification(`Deleted ${p.name}`)
+          setTimeout(() =>{
+            setNotification('')
+          }, 5000)
         })
       })
     }  
@@ -89,12 +118,13 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-
       <FilterForm newFilter={newFilter} handleFilterInput={handleFilterInput}/>      
 
       <h2>Add New</h2>
       <NameForm addName={addName} newName={newName} handleNameInput={handleNameInput}
       newNumber={newNumber} handleNumInput={handleNumInput}/>
+
+      <Notification message={notifMessage} />
 
       <h2>Numbers</h2>
       <Persons persons={namesToShow} remove={removeName}/>
