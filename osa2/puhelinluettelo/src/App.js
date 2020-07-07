@@ -12,7 +12,6 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [newFilter, setNewFilter ] = useState('')
 
-  console.log(persons)
 
   const addName = (event) =>{
     event.preventDefault()
@@ -45,7 +44,6 @@ const App = () => {
   const handleNumInput = (event) =>{
     setNewNumber(event.target.value)
   }
-  console.log(persons)
 
   const namesToShow = persons.filter(person => person.name.match(new RegExp(newFilter, "i")))
 
