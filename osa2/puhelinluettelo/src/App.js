@@ -35,6 +35,21 @@ const App = () => {
     
   }
 
+  const removeName = (p) =>{
+    const toDelete = window.confirm(`Are you sure you want to delete ${p.name} from the phonebook?`)
+
+    if (toDelete){
+      server.removeName(p.id).then(response =>{
+        const names = server.getAll()
+        names.then(response =>{
+          setPersons(response)
+        })
+      })
+  }
+
+    
+  }
+
   const handleNameInput = (event) =>{
     
     setNewName(event.target.value)
@@ -71,7 +86,7 @@ const App = () => {
       newNumber={newNumber} handleNumInput={handleNumInput}/>
 
       <h2>Numbers</h2>
-      <Persons persons={namesToShow} />
+      <Persons persons={namesToShow} remove={removeName}/>
     </div>
   )
 
