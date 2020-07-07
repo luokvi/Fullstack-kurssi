@@ -3,6 +3,7 @@ import axios from 'axios'
 import Persons from './namesnumbers'
 import NameForm from './nameForm'
 import FilterForm from './filterForm'
+import server from './serverService'
 
 
 const App = () => {
@@ -10,6 +11,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [newFilter, setNewFilter ] = useState('')
+
+  console.log(persons)
 
   const addName = (event) =>{
     event.preventDefault()
@@ -28,11 +31,9 @@ const App = () => {
         id: persons.length + 1
     }
 
-
-    axios.post('http://localhost:3001/persons', newPerson)
-      .then(response =>{
-        setPersons(persons.concat(newPerson))
-      })
+    setPersons(persons.concat(newPerson))
+    server.addNew(newPerson)
+    
   }
 
   const handleNameInput = (event) =>{
@@ -44,6 +45,7 @@ const App = () => {
   const handleNumInput = (event) =>{
     setNewNumber(event.target.value)
   }
+  console.log(persons)
 
   const namesToShow = persons.filter(person => person.name.match(new RegExp(newFilter, "i")))
 
@@ -53,10 +55,11 @@ const App = () => {
   }
 
   useEffect(() =>{
-    axios.get('http://localhost:3001/persons').then(response =>{
-      setPersons(response.data)
+    const data = server.getAll()
+    data.then(response => {
+      setPersons(response)
     })
-  }, [])
+   }, [])
 
   
   return (
