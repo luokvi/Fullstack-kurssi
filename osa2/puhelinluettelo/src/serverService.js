@@ -1,20 +1,21 @@
 import axios from 'axios'
 
 const getAll = () =>{
-    const data = axios.get('http://localhost:3001/persons')
+    const data = axios.get('/api/persons')
 
     return data.then(response => response.data)
 }
 
 const addNew = (newPerson) =>{
-    axios.post('http://localhost:3001/persons', newPerson)
+    axios.post('/api/persons', newPerson)
 
 }
 
 const removeName = (id) =>{
-    return axios.delete(`http://localhost:3001/persons/${id}`)
+    return axios.delete(`/api/persons/${id}`)
 }
 
+//Not Functional
 const replaceNum = (persons, name, number) =>{
 
     const toUpdate = persons.find(p => p.name === name)
