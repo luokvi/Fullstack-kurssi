@@ -59,13 +59,24 @@ const App = () => {
         number: newNumber
     }
 
-    setPersons(persons.concat(newPerson))
     server.addNew(newPerson)
+    .then (added =>{
+      console.log('New name added: ', added.name)
+      setPersons(persons.concat(added))
 
-    setNotification(`Added ${newName}`)
-    setTimeout(() =>{
-      setNotification('')
-    }, 5000)
+      setNotification(`Added ${newName}`)
+      setTimeout(() =>{
+        setNotification('')
+      }, 5000)
+
+      })
+    .catch(error =>{
+      console.log(error.response.data)
+      setError(`${error.response.data.error}`)
+      setTimeout(() => {
+        setError('')
+      }, 5000);
+    })
     
   }
 

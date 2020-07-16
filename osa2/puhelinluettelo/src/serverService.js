@@ -7,8 +7,8 @@ const getAll = () =>{
 }
 
 const addNew = (newPerson) =>{
-    axios.post('/api/persons', newPerson)
-
+    const promise = axios.post('/api/persons', newPerson)
+    return promise.then(res => res.data)
 }
 
 const removeName = (id) =>{
