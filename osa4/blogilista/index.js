@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
+const config = require('./utils/config')
 
 const blogSchema = mongoose.Schema({
   title: String,
@@ -14,8 +15,7 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const password = process.argv[2]
-const mongoUrl = `mongodb+srv://viivi:${password}@cluster0-f1buv.azure.mongodb.net/Blogilista?retryWrites=true`
+const mongoUrl = config.MONGO_URL
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true})
 
@@ -40,7 +40,7 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = 3003
+const PORT = config.PORT
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`)
 })
