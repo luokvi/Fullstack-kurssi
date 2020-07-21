@@ -53,6 +53,12 @@ test('blog with no defined likes is saved with 0 likes', async () => {
     expect(likes).toContain(0)
 })
 
+test('addind a blog with no title and no url returns error', async () => {
+    const blogToAdd = {id: "added", author:"George R R Martin", likes: 2}
+    await api.post('/api/blogs').send(blogToAdd)
+    .expect(400)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
