@@ -41,6 +41,18 @@ test('blogs are added correctly', async () => {
 
 })
 
+test('blog with no defined likes is saved with 0 likes', async () => {
+    const blogToAdd = {id: "added",
+    title:"Not a Blog", author:"George R R Martin",
+    url:"https://georgerrmartin.com/notablog/"}
+
+    await api.post('/api/blogs').send(blogToAdd)
+    const blogsAfter = await helper.blogsInDb()
+    expect(blogsAfter).toHaveLength(helper.initialBlogs.length + 1)
+    const likes = blogsAfter.map(b => b.likes)
+    expect(likes).toContain(0)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
