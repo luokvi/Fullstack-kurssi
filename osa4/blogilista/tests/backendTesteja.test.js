@@ -24,7 +24,7 @@ test('blogs have a column named id', async () => {
 })
 
 test('blogs are added correctly', async () => {
-    const blogToAdd = {id: "added",
+    const blogToAdd = {
     title:"Not a Blog", author:"George R R Martin",
     url:"https://georgerrmartin.com/notablog/", likes:5}
 
@@ -42,7 +42,7 @@ test('blogs are added correctly', async () => {
 })
 
 test('blog with no defined likes is saved with 0 likes', async () => {
-    const blogToAdd = {id: "added",
+    const blogToAdd = {
     title:"Not a Blog", author:"George R R Martin",
     url:"https://georgerrmartin.com/notablog/"}
 
@@ -54,7 +54,7 @@ test('blog with no defined likes is saved with 0 likes', async () => {
 })
 
 test('addind a blog with no title and no url returns error', async () => {
-    const blogToAdd = {id: "added", author:"George R R Martin", likes: 2}
+    const blogToAdd = {author:"George R R Martin", likes: 2}
     await api.post('/api/blogs').send(blogToAdd)
     .expect(400)
 })
