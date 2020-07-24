@@ -26,22 +26,11 @@ blogsRouter.get('/:id', async (req, res) => {
   res.json(blog)
 })
 
-const getToken = req => {
-  const auth = req.get('authorization')
-
-  if (auth && auth.toLowerCase().startsWith('bearer ')){
-    console.log(auth.substring(7))
-    return auth.substring(7)
-  }
-  return null
-}
-
 blogsRouter.post('/', async (req, res) => {
   const body = req.body
 
-  const token = getToken(req)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if(!token || !decodedToken.id){
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+  if(!decodedToken.id){
     return res.status(401).json({ error: 'invalid token'})
   }
   const user = await User.findById(decodedToken.id)

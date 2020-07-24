@@ -8,4 +8,13 @@ const errorHandling = async (error, req, res, next) => {
     }
 }
 
-module.exports = { errorHandling, }
+const tokenExctractor = async (req, res, next) => {
+    const auth = req.get('authorization')
+  
+    if (auth && auth.toLowerCase().startsWith('bearer ')){
+      req.token = auth.substring(7)
+    }
+    next()
+  }
+
+module.exports = { errorHandling, tokenExctractor}
