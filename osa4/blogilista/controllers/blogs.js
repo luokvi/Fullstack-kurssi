@@ -62,9 +62,17 @@ blogsRouter.delete('/:id', async (req, res) => {
     return
   }
 
-  await Blog.findByIdAndDelete(blog._id)
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+  const userId = decodedToken.id
 
-  res.status(204).end()
+  if(userId.toString() === blog.user.toString()){
+    await Blog.findByIdAndDelete(blog._id)
+    res.status(204).end()
+    return
+  }
+
+  res.status(401).end()
+
   })
 
 module.exports = blogsRouter
