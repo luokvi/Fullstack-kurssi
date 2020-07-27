@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './index.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -12,6 +13,9 @@ const App = () => {
   const [blogTitle, setTitle] = useState("")
   const [blogAuthor, setAuthor] = useState("")
   const [blogUrl, setUrl] = useState("")
+
+  const [errorMessage, setErrorMessage] = useState("")
+  const [notifMessage, setNotifMessage] = useState("")
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,6 +35,11 @@ const App = () => {
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
+
+    setNotifMessage("logging out")
+    setTimeout(() => {
+      setNotifMessage(null)
+    }, 2000)
   }
 
   const handleLogin = async (event) => {
@@ -44,8 +53,12 @@ const App = () => {
       setUser(user)
       setUsername("")
       setPassword("")
+
     }catch (exception) {
-      console.log('wrong login')
+      setErrorMessage("Wrong username or password")
+      setTimeout(() =>{
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -58,18 +71,38 @@ const App = () => {
       url: blogUrl
     }
 
-    blogService.createBlog(blogObject)
+    await blogService.createBlog(blogObject)
+    setBlogs(await blogService.getAll())
+
+    setNotifMessage(`a new blog ${blogTitle} by ${blogAuthor} added`)
+    setTimeout(() => {
+      setNotifMessage(null)
+    }, 5000)
+
     setTitle("")
     setAuthor("")
     setAuthor("")
     setUrl("")
-    setBlogs(await blogService.getAll())
+  }
+
+  const Notification = ({ message, className }) => {
+    if (message === null){
+      return null
+    }
+
+    return(
+      <div className={className}>
+        {message}
+      </div>
+    )
   }
 
   if (user === null) {
     return (
       <div>
         <h2>Login</h2>
+        <Notification message={errorMessage} className="error" />
+        <Notification message={notifMessage} className="notif" />
         <form onSubmit={handleLogin}>
           <div>username
             <input type="text" value={username} name="Username"
@@ -88,6 +121,8 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={errorMessage} className="error"/>
+      <Notification message={notifMessage} className="notif" />
       <p>logged in as {user.name}
         <button onClick={handleLogout}>logout</button>
       </p>

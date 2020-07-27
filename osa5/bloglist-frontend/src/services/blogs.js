@@ -13,9 +13,9 @@ const createBlog = async newBlog => {
   return res.data
 }
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+const getAll = async () => {
+  const res = await axios.get(baseUrl)
+  return res.data
 }
 
 export default { getAll, setToken, createBlog }
