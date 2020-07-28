@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/blogForm'
+import Toggable from './components/Toggable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './index.css'
 
 const App = () => {
+  const blogFormRef = useRef()
+
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -64,6 +68,7 @@ const App = () => {
 
   const createNewBlog = async (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisible()
 
     const blogObject = {
       title: blogTitle,
@@ -126,22 +131,13 @@ const App = () => {
       <p>logged in as {user.name}
         <button onClick={handleLogout}>logout</button>
       </p>
-      <h3>create new</h3>
-      <form onSubmit={createNewBlog}>
-        <div>Title
-          <input type="text" value={blogTitle} name="Title"
-          onChange={({ target }) => setTitle(target.value)}/>
-        </div>
-        <div>Author
-          <input type="text" value={blogAuthor} name="Author"
-          onChange={({ target }) => setAuthor(target.value)}/>
-        </div>
-        <div>Url
-          <input type="text" value={blogUrl} name="Url"
-          onChange={({ target }) => setUrl(target.value)}/>
-        </div>
-        <button type="submit">create</button>
-      </form>
+
+      <Toggable buttonLabel="new blog" ref={blogFormRef}>
+        <BlogForm createNewBlog={createNewBlog} blogTitle={blogTitle} setTitle={setTitle}
+          blogAuthor={blogAuthor} setAuthor={setAuthor} blogUrl={blogUrl} setUrl={setUrl}
+        />
+      </Toggable>
+      
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
