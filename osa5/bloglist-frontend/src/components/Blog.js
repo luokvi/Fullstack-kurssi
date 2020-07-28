@@ -8,7 +8,7 @@ const Blog = ({ blog, likeFunction }) => {
   }
 
   const like = () =>{
-    console.log('add a like to', blog)
+    
     likeFunction(blog)
   }
 
