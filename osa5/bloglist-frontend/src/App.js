@@ -14,10 +14,6 @@ const App = () => {
   const [password, setPassword] = useState("")
   const [user, setUser] = useState(null)
 
-  const [blogTitle, setTitle] = useState("")
-  const [blogAuthor, setAuthor] = useState("")
-  const [blogUrl, setUrl] = useState("")
-
   const [errorMessage, setErrorMessage] = useState("")
   const [notifMessage, setNotifMessage] = useState("")
 
@@ -66,28 +62,16 @@ const App = () => {
     }
   }
 
-  const createNewBlog = async (event) => {
-    event.preventDefault()
+  const createNewBlog = async (blogObject) => {
     blogFormRef.current.toggleVisible()
-
-    const blogObject = {
-      title: blogTitle,
-      author: blogAuthor,
-      url: blogUrl
-    }
 
     await blogService.createBlog(blogObject)
     setBlogs(await blogService.getAll())
 
-    setNotifMessage(`a new blog ${blogTitle} by ${blogAuthor} added`)
+    setNotifMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
     setTimeout(() => {
       setNotifMessage(null)
     }, 5000)
-
-    setTitle("")
-    setAuthor("")
-    setAuthor("")
-    setUrl("")
   }
 
   const Notification = ({ message, className }) => {
@@ -133,9 +117,7 @@ const App = () => {
       </p>
 
       <Toggable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm createNewBlog={createNewBlog} blogTitle={blogTitle} setTitle={setTitle}
-          blogAuthor={blogAuthor} setAuthor={setAuthor} blogUrl={blogUrl} setUrl={setUrl}
-        />
+        <BlogForm createNewBlog={createNewBlog}/>
       </Toggable>
       
       {blogs.map(blog =>
