@@ -18,8 +18,10 @@ const App = () => {
   const [notifMessage, setNotifMessage] = useState("")
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs => {
+      blogs.sort((a, b) => b.likes - a.likes)
       setBlogs( blogs )
+    }
     )  
   }, [])
 
@@ -66,7 +68,9 @@ const App = () => {
     blogFormRef.current.toggleVisible()
 
     await blogService.createBlog(blogObject)
-    setBlogs(await blogService.getAll())
+    const blgs = await blogService.getAll()
+    blgs.sort((a, b) => b.likes - a.likes)
+    setBlogs(blgs)
 
     setNotifMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
     setTimeout(() => {
@@ -81,8 +85,9 @@ const App = () => {
       setNotifMessage(null)
     }, 5000)
 
-    const blogs = await blogService.getAll()
-    setBlogs(blogs)
+    const blgs = await blogService.getAll()
+    blgs.sort((a, b) => b.likes - a.likes)
+    setBlogs(blgs)
   }
 
   const Notification = ({ message, className }) => {
