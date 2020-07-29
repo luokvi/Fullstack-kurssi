@@ -1,3 +1,4 @@
+
 describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
@@ -37,10 +38,7 @@ describe('Blog app', function() {
 
   describe.only('When logged in', function() {
     beforeEach(function() {
-      cy.contains('login').click()
-      cy.get('#username').type('ctest')
-      cy.get('#password').type('psswrd')
-      cy.get('#login-button').click()
+      cy.login({ username: 'ctest', password: 'psswrd' })
     })
     it('A blog can be created', function() {
       cy.contains('new blog').click()
@@ -50,6 +48,23 @@ describe('Blog app', function() {
       cy.get('#create-button').click()
       cy.get('.blog')
         .should('contain', 'uusi blogi by kirjoittaja')
+    })
+    describe.only('and a blog exists', function() {
+      beforeEach(function() {
+        cy.createBlog({
+          title: 'a good blog',
+          author: 'writer',
+          url: 'duckduckgo.com'
+        })
+      })
+
+      it('it can be liked', function() {
+        cy.contains('a good blog').parent().find('button').click()
+        cy.contains('0').contains('like').click()
+        cy.get('.notif')
+          .should('contain', 'liked a good blog, thanks')
+        cy.contains('1')
+      })
     })
   })
 })
