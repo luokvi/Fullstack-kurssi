@@ -49,7 +49,7 @@ describe('Blog app', function() {
       cy.get('.blog')
         .should('contain', 'uusi blogi by kirjoittaja')
     })
-    describe.only('and a blog exists', function() {
+    describe('and a blog exists', function() {
       beforeEach(function() {
         cy.createBlog({
           title: 'a good blog',
