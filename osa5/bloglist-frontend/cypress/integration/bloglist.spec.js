@@ -36,7 +36,7 @@ describe('Blog app', function() {
     })
   })
 
-  describe.only('When logged in', function() {
+  describe('When logged in', function() {
     beforeEach(function() {
       cy.login({ username: 'ctest', password: 'psswrd' })
     })
