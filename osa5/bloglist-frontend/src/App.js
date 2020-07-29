@@ -10,19 +10,19 @@ const App = () => {
   const blogFormRef = useRef()
 
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [errorMessage, setErrorMessage] = useState("")
-  const [notifMessage, setNotifMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState('')
+  const [notifMessage, setNotifMessage] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
       blogs.sort((a, b) => b.likes - a.likes)
       setBlogs( blogs )
     }
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -34,11 +34,11 @@ const App = () => {
     }
   }, [])
 
-  const handleLogout = (event) => {
+  const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
 
-    setNotifMessage("logging out")
+    setNotifMessage('logging out')
     setTimeout(() => {
       setNotifMessage(null)
     }, 2000)
@@ -53,12 +53,12 @@ const App = () => {
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setUsername("")
-      setPassword("")
+      setUsername('')
+      setPassword('')
 
     }catch (exception) {
-      setErrorMessage("Wrong username or password")
-      setTimeout(() =>{
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     }
@@ -111,11 +111,11 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>username
             <input type="text" value={username} name="Username"
-            onChange={({ target }) => setUsername(target.value)}/>
+              onChange={({ target }) => setUsername(target.value)}/>
           </div>
           <div>password
             <input type="text" value={password} name="Password"
-            onChange={({ target }) => setPassword(target.value)}/>
+              onChange={({ target }) => setPassword(target.value)}/>
           </div>
           <button type="submit">login</button>
         </form>
@@ -135,7 +135,7 @@ const App = () => {
       <Toggable buttonLabel="new blog" ref={blogFormRef}>
         <BlogForm createNewBlog={createNewBlog}/>
       </Toggable>
-      
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} likeFunction={likeBlog} />
       )}

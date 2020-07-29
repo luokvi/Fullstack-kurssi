@@ -8,8 +8,7 @@ const Blog = ({ blog, likeFunction }) => {
     setVisible(!visibleFull)
   }
 
-  const like = () =>{
-    
+  const like = () => {
     likeFunction(blog)
   }
 
@@ -24,19 +23,19 @@ const Blog = ({ blog, likeFunction }) => {
         <p>{blog.url}</p>
         <p>
           {blog.likes}<button onClick={like}>like</button>
-          </p>
+        </p>
         <p>{blog.user.name}</p>
       </div>
     )
   }
 
   return (
-  <div className="blog">
-    <p>
-      <b>{blog.title}</b> by {blog.author}
-      <button onClick={toggleVisible}>view</button>
-    </p>
-  </div>
+    <div className="blog">
+      <p>
+        <b>{blog.title}</b> by {blog.author}
+        <button onClick={toggleVisible}>view</button>
+      </p>
+    </div>
   )
 }
 
