@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, likeFunction }) => {
   const [visibleFull, setVisible] = useState(false)
@@ -37,6 +38,11 @@ const Blog = ({ blog, likeFunction }) => {
     </p>
   </div>
   )
-  }
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  likeFunction: PropTypes.func.isRequired
+}
 
 export default Blog
