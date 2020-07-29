@@ -34,4 +34,22 @@ describe('Blog app', function() {
         .and('have.css', 'color', 'rgb(255, 0, 0)')
     })
   })
+
+  describe.only('When logged in', function() {
+    beforeEach(function() {
+      cy.contains('login').click()
+      cy.get('#username').type('ctest')
+      cy.get('#password').type('psswrd')
+      cy.get('#login-button').click()
+    })
+    it('A blog can be created', function() {
+      cy.contains('new blog').click()
+      cy.get('#title').type('uusi blogi')
+      cy.get('#author').type('kirjoittaja')
+      cy.get('#url').type('google.com')
+      cy.get('#create-button').click()
+      cy.get('.blog')
+        .should('contain', 'uusi blogi by kirjoittaja')
+    })
+  })
 })
