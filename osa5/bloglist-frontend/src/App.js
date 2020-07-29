@@ -108,7 +108,7 @@ const App = () => {
         <h2>Login</h2>
         <Notification message={errorMessage} className="error" />
         <Notification message={notifMessage} className="notif" />
-        <form onSubmit={handleLogin}>
+        <form id="login-form" onSubmit={handleLogin}>
           <div>username
             <input type="text" value={username} name="Username"
               onChange={({ target }) => setUsername(target.value)}/>
