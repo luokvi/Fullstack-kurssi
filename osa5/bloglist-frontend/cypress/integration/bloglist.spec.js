@@ -96,7 +96,7 @@ describe('Blog app', function() {
         cy.get('.blog').should('not.contain', 'a good blog')
       })
 
-      it.only('a blog from another user cannot be deleted', function() {
+      it('a blog from another user cannot be deleted', function() {
         cy.contains('logout').click()
         cy.login({ username: 'other', password: 'otherpass' })
         cy.contains('a good blog').parent().find('button').click()
