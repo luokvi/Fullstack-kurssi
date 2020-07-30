@@ -18,11 +18,7 @@ const App = () => {
   const [notifMessage, setNotifMessage] = useState('')
 
   useEffect(() => {
-    blogService.getAll().then(blogs => {
-      blogs.sort((a, b) => b.likes - a.likes)
-      setBlogs( blogs )
-    }
-    )
+    setAllBlogsSorted()
   }, [])
 
   useEffect(() => {
@@ -64,13 +60,17 @@ const App = () => {
     }
   }
 
+  const setAllBlogsSorted = async () => {
+    const blgs = await blogService.getAll()
+    blgs.sort((a, b) => b.likes - a.likes)
+    setBlogs(blgs)
+  }
+
   const createNewBlog = async (blogObject) => {
     blogFormRef.current.toggleVisible()
 
     await blogService.createBlog(blogObject)
-    const blgs = await blogService.getAll()
-    blgs.sort((a, b) => b.likes - a.likes)
-    setBlogs(blgs)
+    setAllBlogsSorted()
 
     setNotifMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
     setTimeout(() => {
@@ -85,9 +85,19 @@ const App = () => {
       setNotifMessage(null)
     }, 5000)
 
-    const blgs = await blogService.getAll()
-    blgs.sort((a, b) => b.likes - a.likes)
-    setBlogs(blgs)
+    setAllBlogsSorted()
+  }
+
+  const removeBlog = async (blogToRemove) => {
+    if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}?`)) {
+      await blogService.remove(blogToRemove)
+      setAllBlogsSorted()
+
+      setNotifMessage(`removed ${blogToRemove.title}`)
+      setTimeout(() => {
+        setNotifMessage(null)
+      }, 5000)
+    }
   }
 
   const Notification = ({ message, className }) => {
@@ -137,7 +147,7 @@ const App = () => {
       </Toggable>
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} likeFunction={likeBlog} />
+        <Blog key={blog.id} blog={blog} likeFunction={likeBlog} user={user.name} removeFunc={removeBlog}/>
       )}
     </div>
   )

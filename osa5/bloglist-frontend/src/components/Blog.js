@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, likeFunction }) => {
+const Blog = ({ blog, likeFunction, user, removeFunc }) => {
   const [visibleFull, setVisible] = useState(false)
 
   const toggleVisible = () => {
@@ -10,6 +10,20 @@ const Blog = ({ blog, likeFunction }) => {
 
   const like = () => {
     likeFunction(blog)
+  }
+
+  const RemoveBlog = () => {
+    const remove = () => {
+      removeFunc(blog)
+    }
+
+    if (blog.user.name === user){
+      return (
+        <button className="removeButton" onClick={remove}>remove</button>
+      )
+    }
+
+    return(null)
   }
 
   if (visibleFull){
@@ -25,6 +39,7 @@ const Blog = ({ blog, likeFunction }) => {
           {blog.likes}<button onClick={like}>like</button>
         </p>
         <p>{blog.user.name}</p>
+        <RemoveBlog />
       </div>
     )
   }
