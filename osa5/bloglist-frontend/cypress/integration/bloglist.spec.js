@@ -102,6 +102,20 @@ describe('Blog app', function() {
         cy.contains('a good blog').parent().find('button').click()
         cy.get('.blog').should('not.contain', 'remove')
       })
+
+      it('blogs are sorted by the number of likes', function() {
+        cy.get('.blog').then(($blogs) => {
+          cy.wrap($blogs).should('have.length', 3)
+            .and(($blogs) => {
+              const first = $blogs[0]
+              expect(first).to.contain('a very liked blog')
+              const second = $blogs[1]
+              expect(second).to.contain('a second blog')
+              const third = $blogs[2]
+              expect(third).to.contain('a good blog')
+            })
+        })
+      })
     })
   })
 })
