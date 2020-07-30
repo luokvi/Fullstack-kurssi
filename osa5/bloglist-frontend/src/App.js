@@ -34,10 +34,7 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
 
-    setNotifMessage('logging out')
-    setTimeout(() => {
-      setNotifMessage(null)
-    }, 2000)
+    newNotif('loggin out')
   }
 
   const handleLogin = async (event) => {
@@ -66,25 +63,27 @@ const App = () => {
     setBlogs(blgs)
   }
 
+  const newNotif = (message) => {
+    setNotifMessage(message)
+    setTimeout(() => {
+      setNotifMessage(null)
+    }, 5000)
+  }
+
   const createNewBlog = async (blogObject) => {
     blogFormRef.current.toggleVisible()
 
     await blogService.createBlog(blogObject)
     setAllBlogsSorted()
 
-    setNotifMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
-    setTimeout(() => {
-      setNotifMessage(null)
-    }, 5000)
+    newNotif(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+
   }
 
   const likeBlog = async (likedBlog) => {
     await blogService.like(likedBlog)
-    setNotifMessage(`liked ${likedBlog.title}, thanks`)
-    setTimeout(() => {
-      setNotifMessage(null)
-    }, 5000)
 
+    newNotif(`liked ${likedBlog.title}, thanks`)
     setAllBlogsSorted()
   }
 
@@ -92,11 +91,7 @@ const App = () => {
     if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}?`)) {
       await blogService.remove(blogToRemove)
       setAllBlogsSorted()
-
-      setNotifMessage(`removed ${blogToRemove.title}`)
-      setTimeout(() => {
-        setNotifMessage(null)
-      }, 5000)
+      newNotif(`removed ${blogToRemove.title}`)
     }
   }
 
