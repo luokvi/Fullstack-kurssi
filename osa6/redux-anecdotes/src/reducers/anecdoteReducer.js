@@ -1,3 +1,5 @@
+import { act } from "react-dom/test-utils"
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -23,7 +25,43 @@ const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
-  return state
+  switch(action.type) {
+    case 'NEW_ANECDOTE':
+      return [...state, action.data]
+    
+    case 'VOTE':
+      const id = action.data.id
+      const anecToVote = state.find(a => a.id === id)
+      const voted = {
+        ...anecToVote,
+        votes: anecToVote.votes + 1
+      }
+
+      return state.map(a => a.id !== id ? a : voted)
+
+    default:
+      return state
+  }
+}
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    data: {
+      content,
+      id: getId(),
+      votes: 0
+    }
+  }
+}
+
+export const voteForAnecdote = (id) => {
+  return {
+    type: 'VOTE',
+    data: {
+      id: id
+    }
+  }
 }
 
 export default reducer
