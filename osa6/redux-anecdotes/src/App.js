@@ -13,7 +13,6 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("using effet")
     anecdoteService.getAll().then(
       anecdotes => dispatch(initializeAnecdotes(anecdotes))
     )
