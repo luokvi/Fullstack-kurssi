@@ -5,7 +5,10 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
 
-  const anecdotes = useSelector(state => state.anecdotes)
+  const anecdotes = useSelector(({ anecdotes, filter}) => {
+    return anecdotes.filter(a => a.content.match(new RegExp(filter, "i")))
+  })
+
   anecdotes.sort((a, b) => b.votes - a.votes)
   const dispatch = useDispatch()
 
