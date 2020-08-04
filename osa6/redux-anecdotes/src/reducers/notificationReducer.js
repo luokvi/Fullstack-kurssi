@@ -8,6 +8,7 @@ const reducer = (state = null, action) => {
     }
 }
 
+let timeoutId
 export const setNotification = (notif, secs) => {
     return async dispatch => {
         dispatch({
@@ -15,8 +16,10 @@ export const setNotification = (notif, secs) => {
             notif
         })
 
+        clearTimeout(timeoutId)
+        
         const millisecs = secs * 1000
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
             dispatch({
                 type: 'SET_NOTIF',
                 notif: null
