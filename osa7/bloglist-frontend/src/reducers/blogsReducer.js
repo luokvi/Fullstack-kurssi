@@ -8,6 +8,9 @@ const blogsReducer = (state = [ ], action) => {
   case 'INIT_BLOGS':
     return action.data
 
+  case 'LIKE':
+    return state
+
   default: return state
   }
 }
@@ -26,6 +29,7 @@ export const addBlog = blogObject => {
 export const initializeBlogs = () => {
   return async dispatch => {
     const blogs = await blogService.getAll()
+    blogs.sort((a, b) => b.likes - a.likes)
 
     dispatch({
       type: 'INIT_BLOGS',
@@ -34,7 +38,18 @@ export const initializeBlogs = () => {
   }
 }
 
-export const setBlogs = (list) => {
+export const like = (blog) => {
+  return async dispatch => {
+    await blogService.like(blog)
+
+    dispatch({
+      type: 'LIKE',
+      data: blog,
+    })
+  }
+}
+
+export const setBlogs = list => {
   return ({
     type: 'INIT_BLOGS',
     data: list

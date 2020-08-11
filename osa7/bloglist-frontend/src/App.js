@@ -7,7 +7,7 @@ import loginService from './services/login'
 import './index.css'
 import { Notification } from './components/notification'
 import { newNotif, newError, emptyNotif } from './reducers/notifReducer'
-import { setBlogs, addBlog, initializeBlogs } from './reducers/blogsReducer'
+import { setBlogs, addBlog, initializeBlogs, like } from './reducers/blogsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
@@ -78,8 +78,9 @@ const App = () => {
 
   }
 
-  const likeBlog = async (likedBlog) => {
-    await blogService.like(likedBlog)
+  const likeBlog = (likedBlog) => {
+    dispatch(like(likedBlog))
+    dispatch(initializeBlogs())
 
     dispatch(newNotif(`liked ${likedBlog.title}, thanks`))
     setAllBlogsSorted()
