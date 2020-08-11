@@ -4,7 +4,6 @@ const initialState = {
 }
 
 const notifReducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
   case 'NOTIFICATION':
     state = {
@@ -21,7 +20,6 @@ const notifReducer = (state = initialState, action) => {
     return state
 
   case 'EMPTY':
-    console.log('empty kutsuttu!')
     state = {
       message: '',
       class: 'error'

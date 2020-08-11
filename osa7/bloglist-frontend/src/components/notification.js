@@ -2,9 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export const Notification = () => {
-  const message = useSelector(state => state)
+  const message = useSelector(state => state.notif)
 
-  console.log('!!message:', message)
   return(
     <div className={message.class}>
       {message.message}
