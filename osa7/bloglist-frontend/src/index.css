@@ -1,0 +1,19 @@
+.error {
+    color: red;
+    margin: 5px;
+  }
+  
+  .notif {
+    color: green;
+    margin: 5px;
+  }
+
+  .blog {
+    margin: 5px;
+    border-bottom: 1px solid black;
+  }
+
+  .blog button {
+    padding: 2px;
+    margin-left: 10px;
+  }
