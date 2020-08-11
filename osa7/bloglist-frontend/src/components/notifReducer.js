@@ -23,7 +23,7 @@ const notifReducer = (state = initialState, action) => {
   case 'EMPTY':
     console.log('empty kutsuttu!')
     state = {
-      message: action.message,
+      message: '',
       class: 'error'
     }
     return state
@@ -31,6 +31,26 @@ const notifReducer = (state = initialState, action) => {
   default: return state
   }
 
+}
+
+export const newNotif = (message) => {
+  return{
+    type: 'NOTIFICATION',
+    message: message
+  }
+}
+
+export const newError = (message) => {
+  return{
+    type: 'ERROR',
+    message:message
+  }
+}
+
+export const emptyNotif = () => {
+  return{
+    type: 'EMPTY'
+  }
 }
 
 export default notifReducer

@@ -5,7 +5,9 @@ import Toggable from './components/Toggable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './index.css'
-import { Notification, setNotif, setError } from './components/notification'
+import { Notification } from './components/notification'
+import { newNotif, newError, emptyNotif } from './components/notifReducer'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
   const blogFormRef = useRef()
@@ -14,6 +16,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setAllBlogsSorted()
@@ -32,7 +36,8 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
 
-    setNotif('loggin out')
+    dispatch(newNotif('loggin out'))
+    emptyNotification()
   }
 
   const handleLogin = async (event) => {
@@ -48,7 +53,8 @@ const App = () => {
       setPassword('')
 
     }catch (exception) {
-      setError('Wrong username or password')
+      dispatch(newError('Wrong username or password'))
+      emptyNotification()
     }
   }
 
@@ -64,23 +70,32 @@ const App = () => {
     await blogService.createBlog(blogObject)
     setAllBlogsSorted()
 
-    setNotif(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+    dispatch(newNotif(`a new blog ${blogObject.title} by ${blogObject.author} added`))
+    emptyNotification()
 
   }
 
   const likeBlog = async (likedBlog) => {
     await blogService.like(likedBlog)
 
-    setNotif(`liked ${likedBlog.title}, thanks`)
+    dispatch(newNotif(`liked ${likedBlog.title}, thanks`))
     setAllBlogsSorted()
+    emptyNotification()
   }
 
   const removeBlog = async (blogToRemove) => {
     if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}?`)) {
       await blogService.remove(blogToRemove)
       setAllBlogsSorted()
-      setNotif(`removed ${blogToRemove.title}`)
+      dispatch(newNotif(`removed ${blogToRemove.title}`))
+      emptyNotification()
     }
+  }
+
+  const emptyNotification = () => {
+    setTimeout(() => {
+      dispatch(emptyNotif())
+    }, 5000)
   }
 
   if (user === null) {
