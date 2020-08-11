@@ -11,6 +11,9 @@ const blogsReducer = (state = [ ], action) => {
   case 'LIKE':
     return state
 
+  case 'DELETE':
+    return state
+
   default: return state
   }
 }
@@ -45,6 +48,16 @@ export const like = (blog) => {
     dispatch({
       type: 'LIKE',
       data: blog,
+    })
+  }
+}
+
+export const deleteBlog = (blog) => {
+  return async dispatch => {
+    await blogService.remove(blog)
+
+    dispatch({
+      type: 'DELETE'
     })
   }
 }

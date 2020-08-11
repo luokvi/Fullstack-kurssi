@@ -7,7 +7,7 @@ import loginService from './services/login'
 import './index.css'
 import { Notification } from './components/notification'
 import { newNotif, newError, emptyNotif } from './reducers/notifReducer'
-import { setBlogs, addBlog, initializeBlogs, like } from './reducers/blogsReducer'
+import { addBlog, initializeBlogs, like, deleteBlog } from './reducers/blogsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
@@ -60,18 +60,11 @@ const App = () => {
     }
   }
 
-  const setAllBlogsSorted = async () => {
-    const blgs = blogs
-    blgs.sort((a, b) => b.likes - a.likes)
-    dispatch(setBlogs(blgs))
-  }
 
   const createNewBlog = async (blogObject) => {
     blogFormRef.current.toggleVisible()
 
     dispatch(addBlog(blogObject))
-
-    setAllBlogsSorted()
 
     dispatch(newNotif(`a new blog ${blogObject.title} by ${blogObject.author} added`))
     emptyNotification()
@@ -83,14 +76,14 @@ const App = () => {
     dispatch(initializeBlogs())
 
     dispatch(newNotif(`liked ${likedBlog.title}, thanks`))
-    setAllBlogsSorted()
     emptyNotification()
   }
 
   const removeBlog = async (blogToRemove) => {
     if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}?`)) {
-      await blogService.remove(blogToRemove)
-      setAllBlogsSorted()
+      dispatch(deleteBlog(blogToRemove))
+      dispatch(initializeBlogs())
+
       dispatch(newNotif(`removed ${blogToRemove.title}`))
       emptyNotification()
     }
