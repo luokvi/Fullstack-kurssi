@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Users = ({ userslist }) => {
-  console.log(userslist)
   return (
     <div>
       <h2>Users</h2>
