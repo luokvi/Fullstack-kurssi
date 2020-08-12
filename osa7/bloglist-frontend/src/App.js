@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import BlogForm from './components/blogForm'
 import Toggable from './components/Toggable'
 import Users from './components/users'
+import UserPage from './components/UserPage'
 
 
 import './index.css'
@@ -123,6 +124,9 @@ const App = () => {
           <button onClick={handleLogout}>logout</button>
         </p>
         <Switch>
+          <Route path='/users/:id'>
+            <UserPage userslist={userslist}/>
+          </Route>
           <Route path='/users'>
             <Users userslist={userslist}/>
           </Route>
