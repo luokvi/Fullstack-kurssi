@@ -8,11 +8,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import notifReducer from './reducers/notifReducer'
 import blogsReducer from './reducers/blogsReducer'
 import userReducer from './reducers/userReducer'
+import usersReducer from './reducers/usersReducer'
 
 const reducer = combineReducers({
   notif: notifReducer,
   blogs: blogsReducer,
-  user: userReducer
+  user: userReducer,
+  userslist: usersReducer
 })
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
