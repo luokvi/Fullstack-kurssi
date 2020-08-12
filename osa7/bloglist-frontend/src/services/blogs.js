@@ -30,7 +30,6 @@ const like = async (blog) => {
 
   await axios.put((baseUrl + `/${blog.id}`), likedBlog)
 
-  console.log('likes:', likedBlog.likes)
 }
 
 const remove = async (blog) => {

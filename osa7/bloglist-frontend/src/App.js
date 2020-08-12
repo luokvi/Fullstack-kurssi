@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/blogForm'
 import Toggable from './components/Toggable'
-import blogService from './services/blogs'
-import loginService from './services/login'
+
 import './index.css'
 import { Notification } from './components/notification'
 import { newNotif, newError, emptyNotif } from './reducers/notifReducer'
 import { addBlog, initializeBlogs, like, deleteBlog } from './reducers/blogsReducer'
+import { setUser, logoutUser, loginUser } from './reducers/userReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  const user = useSelector(state => state.user)
 
   const dispatch = useDispatch()
 
@@ -26,17 +26,11 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem('loggedUser')
-    if (loggedUser){
-      const user = JSON.parse(loggedUser)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
+    dispatch(setUser())
+  }, [dispatch])
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedUser')
-    setUser(null)
+    dispatch(logoutUser())
 
     dispatch(newNotif('loggin out'))
     emptyNotification()
@@ -46,11 +40,7 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({ username, password, })
-
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
+      dispatch(loginUser(username, password))
       setUsername('')
       setPassword('')
 
@@ -63,7 +53,6 @@ const App = () => {
 
   const createNewBlog = async (blogObject) => {
     blogFormRef.current.toggleVisible()
-
     dispatch(addBlog(blogObject))
 
     dispatch(newNotif(`a new blog ${blogObject.title} by ${blogObject.author} added`))

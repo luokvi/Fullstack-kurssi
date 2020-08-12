@@ -7,10 +7,12 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import notifReducer from './reducers/notifReducer'
 import blogsReducer from './reducers/blogsReducer'
+import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
   notif: notifReducer,
-  blogs: blogsReducer
+  blogs: blogsReducer,
+  user: userReducer
 })
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
