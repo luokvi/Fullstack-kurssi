@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom'
 const UserPage = ({ userslist }) => {
   const id = useParams().id
   const user = userslist.find(u => u.id === id)
+  if (!user) {
+    return(null)
+  }
 
   return(
     <div>
