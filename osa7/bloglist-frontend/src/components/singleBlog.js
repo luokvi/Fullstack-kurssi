@@ -9,6 +9,23 @@ const SingleBlog = ({ blogs, likeFunction }) => {
     likeFunction(blog)
   }
 
+  const Comments = () => {
+    if (!blog.comments){
+      return null
+    }
+
+    return(
+      <div>
+        <h3>comments</h3>
+        <ul>
+          {blog.comments.map(comment =>
+            <li key={comment}>{comment}</li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+
   if (!blog){
     return null
   }
@@ -22,6 +39,7 @@ const SingleBlog = ({ blogs, likeFunction }) => {
         <button onClick={like}>like</button>
       </p>
       <p>added by {blog.user.name}</p>
+      <Comments />
     </div>
   )
 }
