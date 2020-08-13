@@ -9,7 +9,7 @@ import UserPage from './components/UserPage'
 import './index.css'
 import { Notification } from './components/notification'
 import { newNotif, newError, emptyNotif } from './reducers/notifReducer'
-import { addBlog, initializeBlogs, like } from './reducers/blogsReducer'
+import { addBlog, initializeBlogs, like, comment } from './reducers/blogsReducer'
 import { setUser, logoutUser, loginUser } from './reducers/userReducer'
 import { getUsersList } from './reducers/usersReducer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -80,6 +80,12 @@ const App = () => {
     emptyNotification()
   }
 
+  const commentBlog = (commentedBlog, com) => {
+    dispatch(comment(commentedBlog, com))
+    dispatch(newNotif(`commented on ${commentedBlog.title}!`))
+    emptyNotification()
+  }
+
 
   const emptyNotification = () => {
     setTimeout(() => {
@@ -130,7 +136,7 @@ const App = () => {
             <Users userslist={userslist}/>
           </Route>
           <Route path='/blogs/:id'>
-            <SingleBlog blogs={blogs} likeFunction={likeBlog}/>
+            <SingleBlog blogs={blogs} likeFunction={likeBlog} commentFunction={commentBlog}/>
           </Route>
           <Route path='/'>
             <Toggable buttonLabel="new blog" ref={blogFormRef}>

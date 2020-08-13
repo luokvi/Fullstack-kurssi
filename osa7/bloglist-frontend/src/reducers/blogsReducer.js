@@ -17,6 +17,16 @@ const blogsReducer = (state = [ ], action) => {
     id = action.data.id
     return state.filter(blog => blog.id !== id)
 
+  case 'COMMENT':
+    id = action.data.id
+    const blogToUpdate = state.find(b => b.id === id)
+    const updatedBlog = {
+      ...blogToUpdate,
+      comments: blogToUpdate.comments.concat(action.data.comment)
+    }
+    return state.map(blog => blog.id === id ? updatedBlog : blog)
+
+
   default: return state
   }
 }
@@ -70,6 +80,18 @@ export const setBlogs = list => {
     type: 'INIT_BLOGS',
     data: list
   })
+}
+
+export const comment = (blog, comment) => {
+  return async dispatch => {
+    const com = { comment: comment }
+    await blogService.comment(blog, com)
+    com.id = blog.id
+    dispatch({
+      type: 'COMMENT',
+      data: com
+    })
+  }
 }
 
 export default blogsReducer
