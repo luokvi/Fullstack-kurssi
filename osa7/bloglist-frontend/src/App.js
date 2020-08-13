@@ -15,6 +15,7 @@ import { getUsersList } from './reducers/usersReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import SingleBlog from './components/singleBlog'
 
 const App = () => {
   const blogFormRef = useRef()
@@ -130,13 +131,16 @@ const App = () => {
           <Route path='/users'>
             <Users userslist={userslist}/>
           </Route>
+          <Route path='/blogs/:id'>
+            <SingleBlog blogs={blogs} likeFunction={likeBlog}/>
+          </Route>
           <Route path='/'>
             <Toggable buttonLabel="new blog" ref={blogFormRef}>
               <BlogForm createNewBlog={createNewBlog}/>
             </Toggable>
 
             {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} likeFunction={likeBlog} user={user.name} removeFunc={removeBlog}/>
+              <Blog key={blog.id} blog={blog} />
             )}
           </Route>
         </Switch>

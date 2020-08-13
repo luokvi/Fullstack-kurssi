@@ -1,62 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-const Blog = ({ blog, likeFunction, user, removeFunc }) => {
-  const [visibleFull, setVisible] = useState(false)
-
-  const toggleVisible = () => {
-    setVisible(!visibleFull)
-  }
-
-  const like = () => {
-    likeFunction(blog)
-  }
-
-  const RemoveBlog = () => {
-    const remove = () => {
-      removeFunc(blog)
-    }
-
-    if (blog.user.name === user){
-      return (
-        <button className="removeButton" onClick={remove}>remove</button>
-      )
-    }
-
-    return(null)
-  }
-
-  if (visibleFull){
-    return(
-      <div className="blog">
-        <p>
-          <b>{blog.title}</b>
-          <button onClick={toggleVisible}>hide</button>
-        </p>
-        <p>{blog.author}</p>
-        <p>{blog.url}</p>
-        <p>
-          {blog.likes}<button onClick={like}>like</button>
-        </p>
-        <p>{blog.user.name}</p>
-        <RemoveBlog />
-      </div>
-    )
-  }
+const Blog = ({ blog, }) => {
 
   return (
     <div className="blog">
       <p>
-        <b>{blog.title}</b> by {blog.author}
-        <button onClick={toggleVisible}>view</button>
+        <Link to={`/blogs/${blog.id}`}>
+          <b>{blog.title}</b> by {blog.author}
+        </Link>
       </p>
     </div>
   )
 }
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  likeFunction: PropTypes.func.isRequired
+  blog: PropTypes.object.isRequired
 }
 
 export default Blog
