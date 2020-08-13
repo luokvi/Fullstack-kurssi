@@ -9,12 +9,12 @@ import UserPage from './components/UserPage'
 import './index.css'
 import { Notification } from './components/notification'
 import { newNotif, newError, emptyNotif } from './reducers/notifReducer'
-import { addBlog, initializeBlogs, like, deleteBlog } from './reducers/blogsReducer'
+import { addBlog, initializeBlogs, like } from './reducers/blogsReducer'
 import { setUser, logoutUser, loginUser } from './reducers/userReducer'
 import { getUsersList } from './reducers/usersReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SingleBlog from './components/singleBlog'
 
 const App = () => {
@@ -80,20 +80,15 @@ const App = () => {
     emptyNotification()
   }
 
-  const removeBlog = async (blogToRemove) => {
-    if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}?`)) {
-      dispatch(deleteBlog(blogToRemove))
-      dispatch(initializeBlogs())
-
-      dispatch(newNotif(`removed ${blogToRemove.title}`))
-      emptyNotification()
-    }
-  }
 
   const emptyNotification = () => {
     setTimeout(() => {
       dispatch(emptyNotif())
     }, 5000)
+  }
+
+  const padding = {
+    paddingRight: 15
   }
 
   if (user === null) {
@@ -121,7 +116,10 @@ const App = () => {
       <div>
         <h2>blogs</h2>
         <Notification />
-        <p>logged in as {user.name}
+        <p>
+          <Link style={padding} to='/'>blogs</Link>
+          <Link style={padding} to='/users'>users</Link>
+          logged in as {user.name}
           <button onClick={handleLogout}>logout</button>
         </p>
         <Switch>
