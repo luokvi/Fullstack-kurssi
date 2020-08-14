@@ -7,6 +7,7 @@ import styled from 'styled-components'
 const Block = styled.div`
   border-bottom: solid lightgray 2px;
   padding: 5px;
+  transition: 0.5s;
   
   &:hover {
     margin-left: 5px;
@@ -14,7 +15,6 @@ const Block = styled.div`
 `
 const StyledLink = styled.p`
   color: black;
-  transition: 0.5s;
 
   
 `

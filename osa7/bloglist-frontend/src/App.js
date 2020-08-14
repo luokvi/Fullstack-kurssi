@@ -18,9 +18,46 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SingleBlog from './components/singleBlog'
 
 import styled from 'styled-components'
+const FullPage = styled.div`
+  
+  h1,h2,h3,h4,h5{
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+  }
+  a{
+    color: #333;
+    font-size: 1.1em;
+  }
+  a:hover{
+    color: red;
+  }
+  a:visited{
+    color: #333;
+  }
+
+  #like-button{
+    padding: 5px;
+    background: lightgreen;
+    border-radius: 5px;
+    border: solid lightgreen 2px;
+  }
+  #like-button:hover{
+    background: white;
+    border: solid lightgreen 2px;
+  }
+`
 const Navigation = styled.div`
   background: lightgray;
   color: #333;
+
+  p{
+    text-align: right;
+  }
+  button{
+    margin: 5px;
+    margin-left: 20px;
+  }
 `
 
 
@@ -106,7 +143,7 @@ const App = () => {
 
   if (user === null) {
     return (
-      <div>
+      <FullPage>
         <h2>Login</h2>
         <Notification />
         <form id="login-form" onSubmit={handleLogin}>
@@ -120,45 +157,47 @@ const App = () => {
           </div>
           <button id="login-button" type="submit">login</button>
         </form>
-      </div>
+      </FullPage>
     )
   }
 
   return (
-    <Router>
-      <div>
-        <h2>blogs</h2>
-        <Notification />
-        <Navigation>
-          <p>
+    <FullPage>
+      <Router>
+        <div>
+          <h2>blogs</h2>
+          <Notification />
+          <Navigation>
             <Link style={padding} to='/'>blogs</Link>
             <Link style={padding} to='/users'>users</Link>
+            <p>
               logged in as {user.name}
-            <button onClick={handleLogout}>logout</button>
-          </p>
-        </Navigation>
-        <Switch>
-          <Route path='/users/:id'>
-            <UserPage userslist={userslist}/>
-          </Route>
-          <Route path='/users'>
-            <Users userslist={userslist}/>
-          </Route>
-          <Route path='/blogs/:id'>
-            <SingleBlog blogs={blogs} likeFunction={likeBlog} commentFunction={commentBlog}/>
-          </Route>
-          <Route path='/'>
-            <Toggable buttonLabel="new blog" ref={blogFormRef}>
-              <BlogForm createNewBlog={createNewBlog}/>
-            </Toggable>
+              <button onClick={handleLogout}>logout</button>
+            </p>
+          </Navigation>
+          <Switch>
+            <Route path='/users/:id'>
+              <UserPage userslist={userslist}/>
+            </Route>
+            <Route path='/users'>
+              <Users userslist={userslist}/>
+            </Route>
+            <Route path='/blogs/:id'>
+              <SingleBlog blogs={blogs} likeFunction={likeBlog} commentFunction={commentBlog}/>
+            </Route>
+            <Route path='/'>
+              <Toggable buttonLabel="+ new blog" ref={blogFormRef}>
+                <BlogForm createNewBlog={createNewBlog}/>
+              </Toggable>
 
-            {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
-            )}
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+              {blogs.map(blog =>
+                <Blog key={blog.id} blog={blog} />
+              )}
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </FullPage>
   )
 }
 

@@ -1,6 +1,23 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import styled from 'styled-components'
+
+const Page = styled.div`
+
+#create-button{
+  margin: 5px;
+  padding: 5px;
+  background: lightgreen;
+  border-radius: 5px;
+  border: solid lightgreen 2px;
+}
+#create-button:hover{
+  background: white;
+  border: solid lightgreen 2px;
+}
+`
+
 const BlogForm = ({ createNewBlog }) => {
   const [blogTitle, setTitle] = useState('')
   const [blogAuthor, setAuthor] = useState('')
@@ -23,7 +40,7 @@ const BlogForm = ({ createNewBlog }) => {
   }
 
   return(
-    <div>
+    <Page>
       <h3>create new</h3>
       <form onSubmit={NewBlog}>
         <div>Title
@@ -40,7 +57,7 @@ const BlogForm = ({ createNewBlog }) => {
         </div>
         <button id="create-button" type="submit">create</button>
       </form>
-    </div>
+    </Page>
   )
 }
 

@@ -1,6 +1,16 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
+import styled from 'styled-components'
+const Page = styled.div`
+  width: 75%;
+
+  li:nth-child(even){
+    background: lightgrey;
+  }
+`
+
+
 const UserPage = ({ userslist }) => {
   const id = useParams().id
   const user = userslist.find(u => u.id === id)
@@ -9,7 +19,7 @@ const UserPage = ({ userslist }) => {
   }
 
   return(
-    <div>
+    <Page>
       <h2>{user.name}</h2>
       <h4>added blogs</h4>
       <ul>
@@ -19,7 +29,7 @@ const UserPage = ({ userslist }) => {
           </li>
         )}
       </ul>
-    </div>
+    </Page>
   )
 }
 
