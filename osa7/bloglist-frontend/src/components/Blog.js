@@ -7,14 +7,16 @@ import styled from 'styled-components'
 const Block = styled.div`
   border-bottom: solid lightgray 2px;
   padding: 5px;
+  
+  &:hover {
+    margin-left: 5px;
+  }
 `
 const StyledLink = styled.p`
   color: black;
   transition: 0.5s;
 
-  &:hover {
-    margin-left: 5px;
-  }
+  
 `
 
 const Blog = ({ blog, }) => {
