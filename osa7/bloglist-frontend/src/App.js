@@ -17,6 +17,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SingleBlog from './components/singleBlog'
 
+import styled from 'styled-components'
+const Navigation = styled.div`
+  background: lightgray;
+  color: #333;
+`
+
+
 const App = () => {
   const blogFormRef = useRef()
 
@@ -122,12 +129,14 @@ const App = () => {
       <div>
         <h2>blogs</h2>
         <Notification />
-        <p>
-          <Link style={padding} to='/'>blogs</Link>
-          <Link style={padding} to='/users'>users</Link>
-          logged in as {user.name}
-          <button onClick={handleLogout}>logout</button>
-        </p>
+        <Navigation>
+          <p>
+            <Link style={padding} to='/'>blogs</Link>
+            <Link style={padding} to='/users'>users</Link>
+              logged in as {user.name}
+            <button onClick={handleLogout}>logout</button>
+          </p>
+        </Navigation>
         <Switch>
           <Route path='/users/:id'>
             <UserPage userslist={userslist}/>
