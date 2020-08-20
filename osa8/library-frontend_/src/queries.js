@@ -27,11 +27,23 @@ export const ALL_BOOKS = gql`
 `
 
 export const ALL_AUTHORS = gql`
-query {
-  allAuthors {
-    name
-    born
-    bookCount
+  query {
+    allAuthors {
+      name
+      born
+      bookCount
+    }
   }
-}
+`
+
+export const EDIT_BORN = gql`
+  mutation editBorn($name: String!, $setBornTo: Int!){
+      editAuthor(
+          name: $name,
+          setBornTo: $setBornTo
+      ) {
+          name
+          born
+      }
+  }
 `
