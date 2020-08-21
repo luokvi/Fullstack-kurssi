@@ -106,7 +106,7 @@ const resolvers = {
   },
 
   Mutation: {
-    addBook: async (root, args) => {
+    addBook: async (root, args, context) => {
 
       const currentUser = context.currentUser
       if (!currentUser) {
@@ -133,7 +133,7 @@ const resolvers = {
       return await Book.findOne({title: args.title}).populate('author')
     },
     
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, context) => {
       const currentUser = context.currentUser
       if (!currentUser) {
         throw new AuthenticationError("not authenticated")
