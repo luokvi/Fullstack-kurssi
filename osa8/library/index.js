@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const Author = require('./models/author')
 const Book = require('./models/book')
+const book = require('./models/book')
 
 mongoose.set('useFindAndModify', false)
 
@@ -71,8 +72,12 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: (root) => {
-      const booksByAuthor = books.filter((b) => b.author === root.name)
+    bookCount: async (root) => {
+      const books = await Book.find({}).populate('author')
+      const booksByAuthor = books.filter(b => b.author.name === root.name)
+      if(!booksByAuthor){
+        return 0
+      }
       return booksByAuthor.length
     }
   },
