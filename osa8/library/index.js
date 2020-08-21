@@ -87,7 +87,11 @@ const resolvers = {
       return Book.find({}).populate('author')
     },
 
-    allAuthors: () => Author.find({})
+    allAuthors: () => Author.find({}),
+
+    me: (root, args, context) => {
+      return context.currentUser
+    }  
   },
 
   Author: {
