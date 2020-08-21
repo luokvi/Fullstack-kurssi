@@ -40,8 +40,11 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-
-      <BornYearForm authors={authors}/>
+      
+      {props.hasToken ? <BornYearForm authors={authors}/>
+        : null
+      }
+      
 
     </div>
   )
