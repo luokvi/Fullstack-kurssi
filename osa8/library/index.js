@@ -89,9 +89,11 @@ const resolvers = {
 
     allAuthors: () => Author.find({}),
 
-    me: (root, args, context) => {
-      return context.currentUser
-    }  
+    me: async (root, args, context) => {
+      const currentName = context.currentUser.username
+      const user = await User.findOne({username: currentName})
+      return user
+    }
   },
 
   Author: {
@@ -173,6 +175,7 @@ const resolvers = {
   
       const userForToken = {
         username: user.username,
+        favoriteGenre: user.favoriteGenre,
         id: user._id,
       }
   
