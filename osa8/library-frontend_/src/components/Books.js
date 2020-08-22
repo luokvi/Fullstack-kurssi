@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/client'
-import { ALL_BOOKS } from '../queries'
 
 import BookList from './FilteredBookList'
 
 
 const Books = (props) => {
   const [genreFilter, setGenreFilter ] = useState('allGenres')
-  const result = useQuery(ALL_BOOKS)
+  const result = props.result
 
   if (!props.show) {
     return null

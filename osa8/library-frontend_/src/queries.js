@@ -65,3 +65,14 @@ export const GET_ME_GENRE = gql`
     }
   }
 `
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      author { name }
+      published
+      genres
+    }
+  }
+`

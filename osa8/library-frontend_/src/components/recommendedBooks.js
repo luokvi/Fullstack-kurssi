@@ -1,12 +1,12 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { ALL_BOOKS, GET_ME_GENRE } from '../queries'
+import { GET_ME_GENRE } from '../queries'
 
 import BookList from './FilteredBookList'
 
 
 const RecommendedBooks = (props) => {
-  const result = useQuery(ALL_BOOKS)
+  const result = props.result
   const me = useQuery(GET_ME_GENRE, {
       onError: (error) => {
           console.log('error:', error)
@@ -23,7 +23,7 @@ const RecommendedBooks = (props) => {
   }
 
   const books = result.data.allBooks
-  console.log(me)
+  
   let genreFilter = me.data.me.favoriteGenre
   if (genreFilter === null){
     genreFilter = 'allGenres'
