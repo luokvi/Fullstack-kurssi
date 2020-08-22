@@ -41,8 +41,9 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const addedBook = subscriptionData.data.bookAdded
-
       updateCacheWith(addedBook)
+
+      window.alert(`New book added: ${addedBook.title}`)
     }
   })
 
