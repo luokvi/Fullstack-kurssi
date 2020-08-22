@@ -24,6 +24,7 @@ const Books = (props) => {
   })
   const uniqueGenres = new Set(genres)
   genres = [...uniqueGenres]
+  genres.sort()
   
 
   return (
