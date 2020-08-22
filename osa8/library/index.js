@@ -132,15 +132,15 @@ const resolvers = {
         
         author = newAuthor
       }
-      const book = new Book({ ...args, author: author.id })
+      const book = new Book({ ...args, author: author })
       try {
         await book.save()
       } catch (error) {
         throw new UserInputError(error.message, { invalidArgs: args, })
       }
+      
       pubsub.publish('BOOK_ADDED', { bookAdded: book })
-
-      return await Book.findOne({title: args.title}).populate('author')
+      return book
     },
     
     editAuthor: async (root, args, context) => {
