@@ -71,5 +71,5 @@ try {
   const values = validateArguments(process.argv);
   console.log(calculateExercises(values));
 } catch (e) {
-    console.log('Error:', e.message);
+    console.log('Error:', e);
 }

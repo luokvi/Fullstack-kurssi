@@ -19,8 +19,11 @@ app.get('/bmi', (req, res ) => {
           bmi: response
       };
       res.json(jsonResponse);
-  } catch (e) {
-    res.send(`Error: ${e.message}`);
+  } catch {
+    const error = {
+        error: 'Malformed parameters!'
+    };
+    res.json(error);
     res.status(400);
   }
   

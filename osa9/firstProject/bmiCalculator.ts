@@ -36,21 +36,6 @@ export interface bmiValues {
     weight: number;
 }
 
-const validateBmiArguments = (args: Array<string>): bmiValues => {
-    if(args.length < 4) throw new Error('Not enough arguments!');
-  
-    const height = Number(args[2]);
-    const weight = Number(args[3]);
-    if (isNaN(height) || isNaN(weight)) throw new Error('Provided values are not numbers!');
-    else {
-      return{
-        height,
-        weight
-      };
-    }
-    
-};
-
 export const validateHeightAndWeight = (height: string, weight: string): bmiValues => {
   const h = Number(height);
   const w = Number(weight);
@@ -61,10 +46,3 @@ export const validateHeightAndWeight = (height: string, weight: string): bmiValu
       weight: w
   };
 };
-  
-try {
-  const values = validateBmiArguments(process.argv);
-  console.log(calculateBmi(values));
-  } catch (e) {
-    console.log('Error:', e.message);
-}
