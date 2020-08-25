@@ -50,12 +50,12 @@ const calculateExercises = (values: exerciseValues): exerciseResult => {
 const validateArguments = (args: Array<String>): exerciseValues => {
   if(args.length < 4) throw new Error('Not enough arguments!');
 
-  const target = Number(process.argv[2]);
+  const target = Number(args[2]);
   if (isNaN(target)) throw new Error('Provided values are not numbers!');
   let exercises = [];
   let index = 3;
-  while (index < process.argv.length){
-    const value = (Number(process.argv[index]));
+  while (index < args.length){
+    const value = (Number(args[index]));
     if(isNaN(value)) throw new Error('Provided values are not numbers!');
     exercises.push(value);
     index += 1;
