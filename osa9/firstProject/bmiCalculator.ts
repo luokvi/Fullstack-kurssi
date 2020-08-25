@@ -1,4 +1,4 @@
-const calculateBmi = (values: bmiValues): string => {
+export const calculateBmi = (values: bmiValues): string => {
     const heightInMeters = values.height / 100;
     const bmi = values.weight / (heightInMeters * heightInMeters);
 
@@ -48,7 +48,18 @@ const validateBmiArguments = (args: Array<String>): bmiValues => {
       };
     };
     
+};
+
+export const validateHeightAndWeight = (height: string, weight: string): bmiValues => {
+  const h = Number(height);
+  const w = Number(weight);
+  if (isNaN(h) || isNaN(w)) throw new Error('Malformed parameters!');
+
+  return {
+      height: h,
+      weight: w
   };
+};
   
 try {
   const values = validateBmiArguments(process.argv);
