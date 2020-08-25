@@ -1,8 +1,8 @@
-interface exerciseValues {
+export interface exerciseValues {
     exercises: Array<number>;
     target: number;
 }
-interface exerciseResult {
+export interface exerciseResult {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -12,7 +12,7 @@ interface exerciseResult {
   average: number;
 }
 
-const calculateExercises = (values: exerciseValues): exerciseResult => {
+export const calculateExercises = (values: exerciseValues): exerciseResult => {
   const length = values.exercises.length;
   const training = values.exercises.filter(e => e > 0);
   const trainigLenght = training.length;
@@ -46,6 +46,34 @@ const calculateExercises = (values: exerciseValues): exerciseResult => {
       average: avg
   };
 };
+
+interface ErrorMsg {
+    error: string;
+}
+
+
+export const validateExerciseArguments = (values: exerciseValues): ErrorMsg => {
+    const t = Number(values.target);
+    const array = values.exercises;
+    let malformed = false;
+    array.forEach(e => {
+        const n = Number(e);
+        if (isNaN(n)){
+            malformed = true;
+        }
+    });
+    if (isNaN(t) || malformed){
+        return {
+            error: 'Malformatted parameters!'
+        };
+    }
+
+    return {
+        error: '0'
+    };
+};
+
+
 
 const validateArguments = (args: Array<string>): exerciseValues => {
   if(args.length < 4) throw new Error('Not enough arguments!');
