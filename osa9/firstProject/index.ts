@@ -17,7 +17,7 @@ app.get('/bmi', (req, res ) => {
           weight,
           height,
           bmi: response
-      }
+      };
       res.json(jsonResponse);
   } catch (e) {
     res.send(`Error: ${e.message}`);

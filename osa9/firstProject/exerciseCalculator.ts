@@ -1,7 +1,7 @@
 interface exerciseValues {
     exercises: Array<number>;
     target: number;
-};
+}
 interface exerciseResult {
   periodLength: number;
   trainingDays: number;
@@ -10,7 +10,7 @@ interface exerciseResult {
   ratingDescription: string;
   target: number;
   average: number;
-};
+}
 
 const calculateExercises = (values: exerciseValues): exerciseResult => {
   const length = values.exercises.length;
@@ -25,15 +25,15 @@ const calculateExercises = (values: exerciseValues): exerciseResult => {
   if (difference <= -1){
       rating = 1;
       ratingDes = 'You can do better';
-  };
+  }
   if (difference > -1 && difference <= 0.5){
       rating = 2;
       ratingDes = 'Good! Keep at it';
-  };
+  }
   if (difference > 0.5){
       rating = 3;
       ratingDes = 'Amazing!';
-  };
+  }
 
 
   return {
@@ -47,19 +47,19 @@ const calculateExercises = (values: exerciseValues): exerciseResult => {
   };
 };
 
-const validateArguments = (args: Array<String>): exerciseValues => {
+const validateArguments = (args: Array<string>): exerciseValues => {
   if(args.length < 4) throw new Error('Not enough arguments!');
 
   const target = Number(args[2]);
   if (isNaN(target)) throw new Error('Provided values are not numbers!');
-  let exercises = [];
+  const exercises = [];
   let index = 3;
   while (index < args.length){
     const value = (Number(args[index]));
     if(isNaN(value)) throw new Error('Provided values are not numbers!');
     exercises.push(value);
     index += 1;
-  };
+  }
 
   return{
       exercises,
@@ -72,4 +72,4 @@ try {
   console.log(calculateExercises(values));
 } catch (e) {
     console.log('Error:', e.message);
-};
+}
