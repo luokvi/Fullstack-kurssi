@@ -9,7 +9,7 @@ app.get('/hello', (_req, res) => {
 app.get('/bmi', (req, res ) => {
   const height = String(req.query.height);
   const weight = String(req.query.weight);
-  console.log(`h:${height} w:${weight}`)
+  
   try {
       const values = validateHeightAndWeight(height, weight);
       const response = calculateBmi(values);
