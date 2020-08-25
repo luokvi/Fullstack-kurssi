@@ -1,4 +1,4 @@
-import { validateHeightAndWeight, calculateBmi } from './bmiCalculator';
+import { validateHeightAndWeight, calculateBmi, bmiValues } from './bmiCalculator';
 import express from 'express';
 const app = express();
 
@@ -9,15 +9,20 @@ app.get('/hello', (_req, res) => {
 app.get('/bmi', (req, res ) => {
   const height = String(req.query.height);
   const weight = String(req.query.weight);
-  
+
   try {
-      const values = validateHeightAndWeight(height, weight);
+      const values: bmiValues = validateHeightAndWeight(height, weight);
       const response = calculateBmi(values);
-      res.send(response);
+      const jsonResponse = {
+          weight,
+          height,
+          bmi: response
+      }
+      res.json(jsonResponse);
   } catch (e) {
     res.send(`Error: ${e.message}`);
     res.status(400);
-  };
+  }
   
 });
 
