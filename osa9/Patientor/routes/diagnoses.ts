@@ -4,10 +4,10 @@ import diagnoses from '../data/diagnoses.json';
 
 const router = express.Router();
 
-router.get('/', (_req, rep) => {
+router.get('/', (_req, res) => {
   const diagnoses = getDiagnoses();
 
-  rep.json(diagnoses);
+  res.send(diagnoses);
 });
 
 const getDiagnoses = (): Array<Diagnose> => {
