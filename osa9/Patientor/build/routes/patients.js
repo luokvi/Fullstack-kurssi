@@ -10,6 +10,11 @@ router.get('/', (_req, res) => {
     const patients = getNoSensitivePatients();
     res.send(patients);
 });
+router.post('/', (req, res) => {
+    const { name, dateOfBirth, ssn, gender, occupation } = req.body;
+    const newPatient = addNew({ name, dateOfBirth, ssn, gender, occupation });
+    res.json(newPatient);
+});
 const getNoSensitivePatients = () => {
     return patients_json_1.default.map(({ id, name, dateOfBirth, gender, occupation }) => ({
         id,
@@ -18,5 +23,10 @@ const getNoSensitivePatients = () => {
         gender,
         occupation,
     }));
+};
+const addNew = (entry) => {
+    const newPatient = Object.assign({ id: String(Math.random() * 50) }, entry);
+    patients_json_1.default.push(newPatient);
+    return newPatient;
 };
 exports.default = router;
