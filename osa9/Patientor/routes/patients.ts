@@ -1,6 +1,7 @@
 import express from 'express';
 import { Patient, NoSensitivePatient, NewPatient } from '../types';
 import patients from '../data/patients.json';
+import toNewPatient from '../utils';
 
 const router = express.Router();
 
@@ -11,10 +12,15 @@ router.get('/', (_req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { name, dateOfBirth, ssn, gender, occupation } = req.body;
-  const newPatient = addNew( { name, dateOfBirth, ssn, gender, occupation });
+  try {
+    const newPatientEntry = toNewPatient(req.body);
+    const added = addNew(newPatientEntry);
 
-  res.json(newPatient);
+    res.json(added);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+  
 });
 
 const getNoSensitivePatients = (): NoSensitivePatient [] => {
