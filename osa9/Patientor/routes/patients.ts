@@ -1,5 +1,5 @@
 import express from 'express';
-import { Patient, NoSensitivePatient, NewPatient } from '../types';
+import { Patient, NewPatient, PublicPatient } from '../types';
 import patients from '../data/patients.json';
 import toNewPatient from '../utils';
 
@@ -23,25 +23,53 @@ router.post('/', (req, res) => {
   
 });
 
-const getNoSensitivePatients = (): NoSensitivePatient [] => {
+router.get('/:id', (req, res) => {
+  const id : string = req.params.id;
+  const patient : Patient | undefined = getOnePatient(id);
+  
+  if(!patient){
+    res.status(404);
+  }
+  res.status(200).send(patient);
+});
+
+const getNoSensitivePatients = (): PublicPatient [] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
       id,
       name,
       dateOfBirth,
       gender,
       occupation,
+      entries: []
   }));
 };
 
 const addNew = (entry : NewPatient) : Patient => {
   const newPatient = {
     id: String( Math.random() * 50 ),
+    entries: [],
     ...entry
   };
 
   patients.push(newPatient);
 
   return newPatient;
+};
+
+const getOnePatient = (id: string): Patient | undefined => {
+  const onePatient = patients.find(p => p.id === id);
+  if (!onePatient){
+    return undefined;
+  }
+  return {
+    id: onePatient?.id,
+    name: onePatient?.name,
+    ssn: onePatient?.ssn,
+    dateOfBirth: onePatient?.dateOfBirth,
+    gender: onePatient?.gender,
+    occupation: onePatient?.occupation,
+    entries: []
+  };
 };
 
 export default router;
