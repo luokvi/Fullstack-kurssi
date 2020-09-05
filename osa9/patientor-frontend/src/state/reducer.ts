@@ -1,6 +1,5 @@
 import { State } from "./state";
 import { Patient } from "../types";
-import { type } from "os";
 
 export type Action =
   | {
