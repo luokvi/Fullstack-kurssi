@@ -1,5 +1,5 @@
 import express from 'express';
-import { Diagnose } from '../types';
+import { Diagnosis } from '../types';
 import diagnoses from '../data/diagnoses.json';
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get('/', (_req, res) => {
   res.send(diagnoses);
 });
 
-const getDiagnoses = (): Array<Diagnose> => {
+const getDiagnoses = (): Array<Diagnosis> => {
   return diagnoses;
 };
 

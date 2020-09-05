@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const patients_json_1 = __importDefault(require("../data/patients.json"));
+const patients_1 = __importDefault(require("../data/patients"));
 const utils_1 = __importDefault(require("../utils"));
 const router = express_1.default.Router();
 router.get('/', (_req, res) => {
@@ -30,22 +30,21 @@ router.get('/:id', (req, res) => {
     res.status(200).send(patient);
 });
 const getNoSensitivePatients = () => {
-    return patients_json_1.default.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    return patients_1.default.map(({ id, name, dateOfBirth, gender, occupation }) => ({
         id,
         name,
         dateOfBirth,
         gender,
-        occupation,
-        entries: []
+        occupation
     }));
 };
 const addNew = (entry) => {
     const newPatient = Object.assign({ id: String(Math.random() * 50), entries: [] }, entry);
-    patients_json_1.default.push(newPatient);
+    patients_1.default.push(newPatient);
     return newPatient;
 };
 const getOnePatient = (id) => {
-    const onePatient = patients_json_1.default.find(p => p.id === id);
+    const onePatient = patients_1.default.find(p => p.id === id);
     if (!onePatient) {
         return undefined;
     }
@@ -56,7 +55,7 @@ const getOnePatient = (id) => {
         dateOfBirth: onePatient === null || onePatient === void 0 ? void 0 : onePatient.dateOfBirth,
         gender: onePatient === null || onePatient === void 0 ? void 0 : onePatient.gender,
         occupation: onePatient === null || onePatient === void 0 ? void 0 : onePatient.occupation,
-        entries: []
+        entries: onePatient === null || onePatient === void 0 ? void 0 : onePatient.entries
     };
 };
 exports.default = router;

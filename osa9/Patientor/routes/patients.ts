@@ -1,6 +1,6 @@
 import express from 'express';
 import { Patient, NewPatient, PublicPatient } from '../types';
-import patients from '../data/patients.json';
+import patients from '../data/patients';
 import toNewPatient from '../utils';
 
 const router = express.Router();
@@ -39,8 +39,7 @@ const getNoSensitivePatients = (): PublicPatient [] => {
       name,
       dateOfBirth,
       gender,
-      occupation,
-      entries: []
+      occupation
   }));
 };
 
@@ -68,7 +67,7 @@ const getOnePatient = (id: string): Patient | undefined => {
     dateOfBirth: onePatient?.dateOfBirth,
     gender: onePatient?.gender,
     occupation: onePatient?.occupation,
-    entries: []
+    entries: onePatient?.entries
   };
 };
 
