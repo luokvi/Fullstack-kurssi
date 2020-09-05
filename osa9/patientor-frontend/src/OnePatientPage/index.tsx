@@ -6,45 +6,7 @@ import { Container, Icon } from "semantic-ui-react";
 import { Patient, Entry, Diagnosis } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, AddPatientDetails, SetDiagnoses } from "../state";
-
-interface EntriesListProps {
-  entries: Entry[] | undefined;
-  diagnoses: Diagnosis[];
-}
-
-const EntriesList: React.FC<EntriesListProps> = ({ entries, diagnoses }) => {
-  if (!entries || entries.length === 0){
-    return(
-      <div>
-        <p><b>no entries yet</b></p>
-      </div>
-    )
-  }
-  let diagnosesInEntry: Diagnosis[] = [];
-  entries.map((e: Entry) => e.diagnosisCodes?.map(d => {
-    const diagnosis = diagnoses.find((full: Diagnosis) => full.code === String(d));
-    if (diagnosis){
-      diagnosesInEntry = [...diagnosesInEntry, diagnosis];
-    };
-  }));
-  return (
-    <div>
-      <h4>entries</h4>
-      {entries.map((e: Entry) =>
-            <div key={e.description}>
-              <p><b>{e.date}</b>: {e.description}</p>
-              <ul>
-               {diagnosesInEntry.map((d: Diagnosis) =>
-                <li key={d.code}>
-                  {d.code} {d.name} 
-                </li>
-               )}
-              </ul>
-            </div>
-            )}
-    </div>
-  )
-}
+import EntriesList from './entriesList';
 
 
 const OnePatientPage: React.FC = () => {
