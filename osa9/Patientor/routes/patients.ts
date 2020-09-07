@@ -1,7 +1,8 @@
 import express from 'express';
-import { Patient, NewPatient, PublicPatient } from '../types';
+import { Patient, NewPatient, PublicPatient, Entry, NewEntry } from '../types';
 import patients from '../data/patients';
-import toNewPatient from '../utils';
+import { toNewPatient, toNewHealthcheckEntry, toNewHospitalEntry, toNewOccupationalEntry } from '../utils';
+
 
 const router = express.Router();
 
@@ -31,6 +32,34 @@ router.get('/:id', (req, res) => {
     res.status(404);
   }
   res.status(200).send(patient);
+});
+
+router.post('/:id/entries', (req, res) => {
+  try {
+    let newEntry: NewEntry;
+    switch (req.body.type){
+      case("HealthCheck"):
+        newEntry = toNewHealthcheckEntry(req.body);
+        break;
+      case("Hospital"):
+        newEntry = toNewHospitalEntry(req.body);
+        break;
+      case("OccupationalHealthcare"):
+        newEntry = toNewOccupationalEntry(req.body);
+        break;
+      default:
+        throw new Error('Entry not of any type');
+    }
+    const added = addNewEntry(newEntry);
+
+    const id : string = req.params.id;
+    const patient = getOnePatient(id);
+    patient?.entries.push(added);
+
+    res.json(added);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
 });
 
 const getNoSensitivePatients = (): PublicPatient [] => {
@@ -69,6 +98,15 @@ const getOnePatient = (id: string): Patient | undefined => {
     occupation: onePatient?.occupation,
     entries: onePatient?.entries
   };
+};
+
+const addNewEntry = (entry: NewEntry) : Entry => {
+  const newentry = {
+    id: String( Math.random() * 40 ),
+    ...entry
+  };
+
+  return newentry;
 };
 
 export default router;
