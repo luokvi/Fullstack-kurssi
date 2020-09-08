@@ -95,14 +95,15 @@ const parseDiagnosisArray = (field: any[]) : string[] => {
 };
 
 const parseHealthCheck = (field: any): HealthCheckRating => {
-    if (!field || !isHealthCheckRating(field)){
+    if (undefined || !isHealthCheckRating(field)){
         throw new Error(`incorrect or missing healthcheckrating ${field}`);
     }
     return field;
 };
 
 const isHealthCheckRating = (field: any): field is HealthCheckRating => {
-    return Object.values(HealthCheckRating).includes(field);
+    const numericvalues = [1, 2, 3, 0];
+    return numericvalues.includes(field);
 };
 
 const parseDischarge = (field: any): Discharge => {

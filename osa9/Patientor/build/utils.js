@@ -78,13 +78,14 @@ const parseDiagnosisArray = (field) => {
     return field;
 };
 const parseHealthCheck = (field) => {
-    if (!field || !isHealthCheckRating(field)) {
+    if (undefined || !isHealthCheckRating(field)) {
         throw new Error(`incorrect or missing healthcheckrating ${field}`);
     }
     return field;
 };
 const isHealthCheckRating = (field) => {
-    return Object.values(types_1.HealthCheckRating).includes(field);
+    const numericvalues = [1, 2, 3, 0];
+    return numericvalues.includes(field);
 };
 const parseDischarge = (field) => {
     if (!field || !isDischarge(field)) {
