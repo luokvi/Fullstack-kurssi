@@ -2,8 +2,8 @@ import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, SelectField, NumberField, DiagnosisSelection } from "../AddPatientModal/FormField";
-import { Entry, HealthCheckEntry } from "../types";
+import { TextField, NumberField, DiagnosisSelection } from "../AddPatientModal/FormField";
+import { HealthCheckEntry } from "../types";
 import { useStateValue } from "../state";
 
 export type EntryFormValues = Omit<HealthCheckEntry, "id">
@@ -31,16 +31,16 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         const requiredError = "Field is required";
         const errors: { [field: string]: string } = {};
         if (!values.description) {
-          errors.name = requiredError;
+          errors.description = requiredError;
         }
         if (!values.date) {
-          errors.ssn = requiredError;
+          errors.date = requiredError;
         }
         if (!values.specialist) {
-          errors.dateOfBirth = requiredError;
+          errors.specialist = requiredError;
         }
         if (!values.healthCheckRating) {
-          errors.occupation = requiredError;
+          errors.healthCheckRating = requiredError;
         }
         return errors;
       }}
