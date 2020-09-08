@@ -5,7 +5,7 @@ import { NewPatient, Gender, HealthCheckRating, Discharge, SickLeave, NewEntry }
 export const toNewPatient = (object : any) : NewPatient  => {
   const newEntry : NewPatient = {
       name: parseField(object.name),
-      dateOfBirth: parseField(object.dateOfBirth),
+      dateOfBirth: parseDate(object.dateOfBirth),
       ssn: parseField(object.ssn),
       gender: parseGender(object.gender),
       occupation: parseField(object.occupation),
