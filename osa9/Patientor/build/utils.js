@@ -6,7 +6,7 @@ const types_1 = require("./types");
 exports.toNewPatient = (object) => {
     const newEntry = {
         name: parseField(object.name),
-        dateOfBirth: parseField(object.dateOfBirth),
+        dateOfBirth: parseDate(object.dateOfBirth),
         ssn: parseField(object.ssn),
         gender: parseGender(object.gender),
         occupation: parseField(object.occupation),
