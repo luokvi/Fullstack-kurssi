@@ -38,17 +38,17 @@ router.post('/:id/entries', (req, res) => {
   try {
     let newEntry: NewEntry;
     switch (req.body.type){
-      case("HealthCheck"):
-        newEntry = toNewHealthcheckEntry(req.body);
-        break;
-      case("Hospital"):
-        newEntry = toNewHospitalEntry(req.body);
-        break;
-      case("OccupationalHealthcare"):
-        newEntry = toNewOccupationalEntry(req.body);
-        break;
-      default:
-        throw new Error('Entry not of any type');
+    case("HealthCheck"):
+      newEntry = toNewHealthcheckEntry(req.body);
+      break;
+    case("Hospital"):
+      newEntry = toNewHospitalEntry(req.body);
+      break;
+    case("OccupationalHealthcare"):
+      newEntry = toNewOccupationalEntry(req.body);
+      break;
+    default:
+      throw new Error('Entry not of any type');
     }
     const added = addNewEntry(newEntry);
 
@@ -64,11 +64,11 @@ router.post('/:id/entries', (req, res) => {
 
 const getNoSensitivePatients = (): PublicPatient [] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
-      id,
-      name,
-      dateOfBirth,
-      gender,
-      occupation
+    id,
+    name,
+    dateOfBirth,
+    gender,
+    occupation
   }));
 };
 
